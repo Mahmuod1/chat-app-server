@@ -7,7 +7,13 @@ const cors = require('cors')
 const socketIo=require('socket.io')
 const http =require('http')
 const auth = require('./controllers/auth')
-const server= http.createServer(app)
+const server= http.createServer(app,{
+    cors: {
+        origin: ["http:localhost/3000"],
+        allowedHeaders: ["Access-Control-Allow-Origin"],
+        credentials: true
+      }
+})
 const io=socketIo(server)
 const user= require('./controllers/user')
 const group = require('./controllers/group')
