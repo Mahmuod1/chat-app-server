@@ -15,7 +15,12 @@ const server= http.createServer(app,{
       }
 })
 app.use(cors('*'))
-const io=socketIo(server,{ origins: '*:*'})
+const io=socketIo(server,{ 
+    cors: {
+    origin: "*",
+    allowedHeaders: ["Access-Control-Allow-Origin"],
+    credentials: true
+  }})
 
 const user= require('./controllers/user')
 const group = require('./controllers/group')
