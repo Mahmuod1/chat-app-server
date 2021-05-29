@@ -18,6 +18,7 @@ app.use(cors('*'))
 const io=socketIo(server,{ 
     cors: {
     origin: "*",
+    methods: ["GET", "POST"],
     allowedHeaders: ["Access-Control-Allow-Origin"],
     credentials: true
   }})
@@ -26,7 +27,7 @@ const user= require('./controllers/user')
 const group = require('./controllers/group')
 const Message=require('./modal/message')
 app.get('/',(req,res)=>{
-    res.write('<h1>Hello to my nodejs server</h1>')
+    res.write('<h1>Hello to my nodejs server :D</h1>')
 })
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));
