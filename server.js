@@ -4,7 +4,6 @@ const mongoose= require('mongoose')
 const bodyParser= require('body-parser')
 const message= require('./controllers/message')
 const cors = require('cors')
-const socketIo=require('socket.io')
 const http =require('http')
 const auth = require('./controllers/auth')
 const server= http.createServer(app,{
@@ -12,16 +11,28 @@ const server= http.createServer(app,{
         origin: "*",
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: true
-      }
+    }
 })
 app.use(cors('*'))
-const io=socketIo(server,{ 
+const io=require('socket.io')(server,{
     cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Access-Control-Allow-Origin"],
-    credentials: true
-  }})
+        origin: "*",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Access-Control-Allow-Origin"],
+        credentials: true
+      }
+    }
+)
+
+// const io=socketIo(server,{ 
+//     cors: {
+
+//     origin: "*",
+
+//     methods: ["GET", "POST"],
+//     allowedHeaders: ["Access-Control-Allow-Origin"],
+//     credentials: true
+//   }})
 
 const user= require('./controllers/user')
 const group = require('./controllers/group')
