@@ -8,21 +8,38 @@ const http =require('http')
 const auth = require('./controllers/auth')
 const server= http.createServer(app,{
     cors: {
-        origin: "*",
+        origin: "http://localhost:8000/socket.io/?EIO=4&transport=polling&t=NcukAEm",
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: true
     }
 })
+
 app.use(cors('*'))
 const io=require('socket.io')(server,{
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Access-Control-Allow-Origin"],
-        credentials: true
-      }
+   cors: { 'Access-Control-Allow-Credentials': true,
+'Access-Control-Allow-Methods': ['GET', 'PUT', 'POST', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'],
+'Access-Control-Allow-Origin': 'http://localhost:3000',
+'Connection': 'keep-alive',
+'Content-Length': 1,
+'Content-Type': 'text/plain; charset=UTF-8',
+'Vary': 'Origin'
+
+}       
     }
 )
+
+// const io = require('socket.io')(server,(req, res, next) => {
+
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+// res.setHeader('Connection','keep-alive')
+// res.setHeader('Content-Type','text/plain; charset=UTF-8')
+//   res.setHeader("Access-Control-Allow-Origin",'http://localhost:3000')
+//   res.setHeader("Access-Control-Allow-Methods", "POST,HEAD,GET,POT,PATCH,DELETE,OPTIONS,PUT");
+//   console.log('done headers')
+//   req.setHeader("Access-Control-Allow-Origin",'http://localhost:3000')
+//   next();
+// })
+
 
 // const io=socketIo(server,{ 
 //     cors: {
