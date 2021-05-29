@@ -9,18 +9,22 @@ const http =require('http')
 const auth = require('./controllers/auth')
 const server= http.createServer(app,{
     cors: {
-        origin: ["http:localhost/3000"],
+        origin: "*",
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: true
       }
 })
-const io=socketIo(server)
+app.use(cors('*'))
+const io=socketIo(server,{ origins: '*:*'})
+
 const user= require('./controllers/user')
 const group = require('./controllers/group')
 const Message=require('./modal/message')
+app.get('/',(req,res)=>{
+    res.write('<h1>Hello to my nodejs server</h1>')
+})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors('*'))
 io.on('connection',(socket)=>{
 
 socket.on('join',({room,name,userId},callback)=>{
