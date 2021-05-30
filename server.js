@@ -6,13 +6,7 @@ const message= require('./controllers/message')
 const cors = require('cors')
 const http =require('http')
 const auth = require('./controllers/auth')
-const server= http.createServer(app,{
-    cors: {
-        origin: "http://localhost:8000/socket.io/?EIO=4&transport=polling&t=NcukAEm",
-        allowedHeaders: ["Access-Control-Allow-Origin"],
-        credentials: true
-    }
-})
+const server= http.createServer(app)
 
 app.use(cors('*'))
 const io=require('socket.io')(server,{
@@ -28,28 +22,6 @@ const io=require('socket.io')(server,{
     }
 )
 
-// const io = require('socket.io')(server,(req, res, next) => {
-
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-// res.setHeader('Connection','keep-alive')
-// res.setHeader('Content-Type','text/plain; charset=UTF-8')
-//   res.setHeader("Access-Control-Allow-Origin",'http://localhost:3000')
-//   res.setHeader("Access-Control-Allow-Methods", "POST,HEAD,GET,POT,PATCH,DELETE,OPTIONS,PUT");
-//   console.log('done headers')
-//   req.setHeader("Access-Control-Allow-Origin",'http://localhost:3000')
-//   next();
-// })
-
-
-// const io=socketIo(server,{ 
-//     cors: {
-
-//     origin: "*",
-
-//     methods: ["GET", "POST"],
-//     allowedHeaders: ["Access-Control-Allow-Origin"],
-//     credentials: true
-//   }})
 
 const user= require('./controllers/user')
 const group = require('./controllers/group')
@@ -71,12 +43,12 @@ socket.on('messageToGroup',(msg)=>{
 Message.create(msg).then(data=>{
     
     io.to(msg.to).emit('messageToClient',data)
-    
+    callback();
 }).catch(e=>{
     io.to(msg.to).emit('error',{error:e})
 })
 
-})
+},callback)
 
     })
 app.use('/message',message)
