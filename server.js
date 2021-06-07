@@ -49,14 +49,13 @@ Message.create(msg).then(data=>{
 })
 
 })
-
     })
 app.use('/message',message)
 app.use('/auth',auth)
 app.use('/user',user)
 app.use('/group',group)
 const PORT= process.env.PORT||8000;
-/*  */
+
 
 mongoose.connect('mongodb://mahmuod:I5Rl1sKovQfMSeuF@cluster0-shard-00-00.gbjh2.mongodb.net:27017,cluster0-shard-00-01.gbjh2.mongodb.net:27017,cluster0-shard-00-02.gbjh2.mongodb.net:27017/chatApp?ssl=true&replicaSet=atlas-55gpxt-shard-0&authSource=admin&retryWrites=true&w=majority',{
     useCreateIndex:true,
